@@ -328,3 +328,36 @@ def calculate_cma(df_results, pop=10000):
     total_savings = df_results['CMA_Savings'].sum()
     
     return df_results, total_savings
+
+# Run CMA
+cma_df, project_savings = calculate_cma(results_df)
+print(f"Total Cost Savings via CMA: ${project_savings:,.2f}")
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+# 1. Page Config
+st.set_page_config(page_title="GF NFM HTA Dashboard", layout="wide")
+
+# 2. Sidebar Sliders (Dynamic Inputs)
+st.sidebar.header("Simulation Parameters")
+ate_slider = st.sidebar.slider("Treatment Effect (ATE)", 0.0, 0.05, 0.0231)
+risk_slider = st.sidebar.slider("Supply Chain Risk (%)", 0.0, 20.0, 9.1)
+
+# 3. KPI Metrics
+col1, col2, col3 = st.columns(3)
+col1.metric("Benefit-Cost Ratio (BCR)", "13.84", "↑ 2.1")
+col2.metric("ICER", "$9,675/QALY", "Stable")
+col3.metric("Supply Chain Risk", f"{risk_slider}%", "-0.5%", delta_color="inverse")
+
+# 4. Interactive Charts
+tab1, tab2 = st.tabs(["Clinical Transitions", "Equity Impact (ECEA)"])
+
+with tab1:
+    st.subheader("5-Year Markov State Projections")
+    # Call your Scalability2.py logic here using ate_slider as input
+    # st.area_chart(your_sim_data)
+
+with tab2:
+    st.subheader("Financial Risk Protection by Wealth Quintile")
+    # Use Plotly for interactive "hover" data on quintiles
