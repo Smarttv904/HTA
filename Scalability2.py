@@ -328,14 +328,6 @@ def calculate_cma(df_results, pop=10000):
     total_savings = df_results['CMA_Savings'].sum()
     
     return df_results, total_savings
-
-# Run CMA
-cma_df, project_savings = calculate_cma(results_df)
-print(f"Total Cost Savings via CMA: ${project_savings:,.2f}")
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
 # 1. Page Config
 st.set_page_config(page_title="GF NFM HTA Dashboard", layout="wide")
 
